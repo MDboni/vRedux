@@ -1,20 +1,19 @@
 import React, { useState } from 'react'
 import Counter from './component/Counter'
 import Stats from './component/Stats'
+import { useDispatch, useSelector } from 'react-redux'
+import { decrement, increment } from './feters/counters/counterSlice'
 
-const initialCouters =[
-  {id: 1, value: 10},
-  {id: 2, value: 20},
-]
 
 export default function App() {
-  const [counters, setCounters] = useState(initialCouters);
+  const counters = useSelector(state => state.counter)
+  const dispatch = useDispatch()
 
   const handleIncrement = (id) => {
-    setCounters(prev => prev.map(counter => counter.id === id ? {...counter, value: counter.value + 1} : counter));
+    dispatch(increment({id}))
   }
   const handleDecrement = (id) => {
-    setCounters(prev => prev.map(counter => counter.id === id ? {...counter, value: counter.value - 1} : counter));
+    dispatch(decrement({id}))
   }
   return (
     <div className='w-screen h-screen p-10 bg-gray-100 text-slate-700'>
